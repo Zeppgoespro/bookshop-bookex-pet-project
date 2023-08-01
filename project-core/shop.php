@@ -5,12 +5,6 @@ session_start();
 
 $user_id = @$_SESSION['user_id'];
 
-/*
-if (!isset($user_id)) {
-  header('location: login.php');
-}
-*/
-
 if (isset($_POST['add_to_cart'])) {
 
   $product_name = $_POST['product_name'];
@@ -22,16 +16,16 @@ if (isset($_POST['add_to_cart'])) {
 
   if (mysqli_num_rows($check_cart_numbers) > 0) {
     $_SESSION['msg'] = 'Already added to cart';
-    header('location: shop.php');
+    header('location: shop.php#products');
     exit;
   } elseif (!isset($user_id)) {
     $_SESSION['msg'] = 'You are not registered yet. Please register or login!';
-    header('location: shop.php');
+    header('location: shop.php#products');
     exit;
   } else {
     mysqli_query($conn, "INSERT INTO `cart` (user_id, name, price, quantity, image) VALUES ('$user_id', '$product_name', '$product_price', '$product_quantity', '$product_image')") or die('Query failed');
     $_SESSION['msg'] = 'Product added to cart';
-    header('location: shop.php');
+    header('location: shop.php#products');
     exit;
   }
 }
@@ -66,7 +60,7 @@ if (isset($_SESSION['msg'])) {
     <p><a href="./home.php">home</a> | shop</p>
   </div>
 
-  <section class="products">
+  <section class="products" id="products">
 
     <h1 class="title">our products</h1>
 

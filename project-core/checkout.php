@@ -48,10 +48,11 @@ if (isset($_POST['order_btn'])) {
       mysqli_query($conn, "INSERT INTO `orders` (user_id, name, number, email, method, address, total_products, total_price, placed_on) VALUES ('$user_id', '$name', '$number', '$email', '$method', '$address', '$total_products', '$cart_total', '$placed_on')") or die('Query failed');
 
       $_SESSION['msg'] = 'Order placed successfully';
-      header('location: checkout.php');
-      exit;
 
       mysqli_query($conn, "DELETE FROM `cart` WHERE user_id = '$user_id'") or die('Query failed');
+
+      header('location: checkout.php');
+      exit;
     }
   }
 

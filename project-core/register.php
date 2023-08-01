@@ -12,19 +12,19 @@ if (isset($_POST['submit'])) {
   $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email' AND password = '$pass'") or die('Query failed');
 
   if (mysqli_num_rows($select_users) > 0) {
-    $_SESSION['msg'] = 'User already exist';
+    setcookie('msg', 'User already exist', time() + 3600);
     header('location: register.php');
     exit;
 
   } else {
     if ($pass != $cpass) {
-      $_SESSION['msg'] = 'Confirm password not matched';
+      setcookie('msg', 'Confirmed password not matched', time() + 3600);
       header('location: register.php');
       exit;
 
     } else {
       mysqli_query($conn, "INSERT INTO `users` (name, email, password, user_type) VALUES ('$name', '$email', '$cpass', '$user_type')") or die('Query failed');
-      $_SESSION['msg'] = 'Successfully registered';
+      setcookie('msg', 'Successfully registered', time() + 3600);
       header('location: login.php');
       exit;
 
@@ -32,9 +32,10 @@ if (isset($_POST['submit'])) {
   }
 }
 
-if (isset($_SESSION['msg'])) {
-  $message[] = $_SESSION['msg'];
-  unset($_SESSION['msg']);
+if (isset($_COOKIE['msg'])) {
+  $message[] = $_COOKIE['msg'];
+  unset($_COOKIE['msg']);
+  setcookie('msg', '', time() - 3600);
 }
 
 ?>

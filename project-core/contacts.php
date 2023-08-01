@@ -70,7 +70,7 @@ if (isset($_SESSION['msg'])) {
       <input type="email" name="email" required placeholder="Enter your email" class="box">
       <input type="tel" name="number" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" required placeholder="Enter your telephone number" class="box">
       <small style="font-size: 1.5rem; color: var(--black);">Format: 123-456-7890</small>
-      <textarea name="message" class="box" placeholder="Enter your message" id="" cols="30" rows="10"></textarea>
+      <textarea name="message" class="box" required placeholder="Enter your message" id="" cols="30" rows="10"></textarea>
       <input type="submit" value="send message" name="send" class="btn">
     </form>
 

@@ -34,6 +34,12 @@ if (isset($_POST['submit'])) {
   }
 }
 
+if (isset($_COOKIE['msg'])) {
+  $message[] = $_COOKIE['msg'];
+  unset($_COOKIE['msg']);
+  setcookie('msg', '', time() - 3600);
+}
+
 if (isset($_SESSION['msg'])) {
   $message[] = $_SESSION['msg'];
   unset($_SESSION['msg']);
