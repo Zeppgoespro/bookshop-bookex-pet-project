@@ -5,12 +5,6 @@ session_start();
 
 $user_id = @$_SESSION['user_id'];
 
-/*
-if (!isset($user_id)) {
-  header('location: login.php');
-}
-*/
-
 if (isset($_POST['add_to_cart'])) {
 
   $product_name = $_POST['product_name'];
@@ -21,13 +15,24 @@ if (isset($_POST['add_to_cart'])) {
   $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND user_id = '$user_id'") or die('Query failed');
 
   if (mysqli_num_rows($check_cart_numbers) > 0) {
-    $message[] = 'Already added to cart';
+    $_SESSION['msg'] = 'Already added to cart';
+    header('location: home.php');
+    exit;
   } elseif (!isset($user_id)) {
-    $message[] = 'You are not registered yet. Please register or login!';
+    $_SESSION['msg'] = 'You are not registered yet. Please register or login!';
+    header('location: home.php');
+    exit;
   } else {
     mysqli_query($conn, "INSERT INTO `cart` (user_id, name, price, quantity, image) VALUES ('$user_id', '$product_name', '$product_price', '$product_quantity', '$product_image')") or die('Query failed');
-    $message[] = 'Product added to cart';
+    $_SESSION['msg'] = 'Product added to cart';
+    header('location: home.php');
+    exit;
   }
+}
+
+if (isset($_SESSION['msg'])) {
+  $message[] = $_SESSION['msg'];
+  unset($_SESSION['msg']);
 }
 
 ?>
@@ -53,7 +58,7 @@ if (isset($_POST['add_to_cart'])) {
   <section class="home">
 
     <div class="content">
-      <h3>Best books in the universe for fill your soul call.</h3>
+      <h3>Best books in the universe for fill your soul call</h3>
       <p>Books from all around the world. Almost every genre that you can possibly imagine! Drive your lust for awesome reading insane!</p>
       <a href="./about.php" class="white-btn">Discover more</a>
     </div>

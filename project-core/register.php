@@ -12,18 +12,29 @@ if (isset($_POST['submit'])) {
   $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email' AND password = '$pass'") or die('Query failed');
 
   if (mysqli_num_rows($select_users) > 0) {
-    $message[] = 'User already exist';
+    $_SESSION['msg'] = 'User already exist';
+    header('location: register.php');
+    exit;
 
   } else {
     if ($pass != $cpass) {
-      $message[] = 'Confirm password not matched';
+      $_SESSION['msg'] = 'Confirm password not matched';
+      header('location: register.php');
+      exit;
 
     } else {
       mysqli_query($conn, "INSERT INTO `users` (name, email, password, user_type) VALUES ('$name', '$email', '$cpass', '$user_type')") or die('Query failed');
-      $message[] = 'Successfully registered';
+      $_SESSION['msg'] = 'Successfully registered';
       header('location: login.php');
+      exit;
+
     }
   }
+}
+
+if (isset($_SESSION['msg'])) {
+  $message[] = $_SESSION['msg'];
+  unset($_SESSION['msg']);
 }
 
 ?>

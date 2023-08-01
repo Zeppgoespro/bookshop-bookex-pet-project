@@ -18,19 +18,25 @@ if (isset($_POST['submit'])) {
       $_SESSION['admin_email'] = $row['email'];
       $_SESSION['admin_id'] = $row['id'];
       header('location: admin-page.php');
-
+      exit;
     } elseif ($row['user_type'] == 'user') {
       $_SESSION['user_name'] = $row['name'];
       $_SESSION['user_email'] = $row['email'];
       $_SESSION['user_id'] = $row['id'];
       header('location: home.php');
-
+      exit;
     }
 
   } else {
-    $message[] = 'Incorrect name, email or password';
-
+    $_SESSION['msg'] = 'Incorrect name, email or password';
+    header('location: login.php');
+    exit;
   }
+}
+
+if (isset($_SESSION['msg'])) {
+  $message[] = $_SESSION['msg'];
+  unset($_SESSION['msg']);
 }
 
 ?>

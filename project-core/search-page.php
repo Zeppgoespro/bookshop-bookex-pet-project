@@ -5,11 +5,12 @@ session_start();
 
 $user_id = @$_SESSION['user_id'];
 
-/*
-if (!isset($user_id)) {
-  header('location: login.php');
-}
-*/
+if (isset($_POST['submit'])):
+  unset($_SESSION['srch']);
+  $_SESSION['srch'] = $_POST['search'];
+  header('location: search-page.php#search-anchor');
+  exit;
+endif;
 
 if (isset($_POST['add_to_cart'])) {
 
@@ -21,13 +22,24 @@ if (isset($_POST['add_to_cart'])) {
   $check_cart_numbers = mysqli_query($conn, "SELECT * FROM `cart` WHERE name = '$product_name' AND user_id = '$user_id'") or die('Query failed');
 
   if (mysqli_num_rows($check_cart_numbers) > 0) {
-    $message[] = 'Already added to cart';
+    $_SESSION['msg'] = 'Already added to cart';
+    header('location: search-page.php#search-anchor');
+    exit;
   } elseif (!isset($user_id)) {
-    $message[] = 'You are not registered yet. Please register or login!';
+    $_SESSION['msg'] = 'You are not registered yet. Please register or login!';
+    header('location: search-page.php#search-anchor');
+    exit;
   } else {
     mysqli_query($conn, "INSERT INTO `cart` (user_id, name, price, quantity, image) VALUES ('$user_id', '$product_name', '$product_price', '$product_quantity', '$product_image')") or die('Query failed');
-    $message[] = 'Product added to cart';
+    $_SESSION['msg'] = 'Product added to cart';
+    header('location: search-page.php#search-anchor');
+    exit;
   }
+}
+
+if (isset($_SESSION['msg'])) {
+  $message[] = $_SESSION['msg'];
+  unset($_SESSION['msg']);
 }
 
 ?>
@@ -50,7 +62,7 @@ if (isset($_POST['add_to_cart'])) {
 
   <?php include './header.php' ?>
 
-  <div class="heading">
+  <div class="heading" id="search-anchor">
     <h3>search page</h3>
     <p><a href="./home.php">home</a> | search</p>
   </div>
@@ -58,7 +70,16 @@ if (isset($_POST['add_to_cart'])) {
   <section class="search-form">
 
     <form action="" method="post">
-      <input type="text" name="search" placeholder="Search products..." class="box">
+      <input type="text" name="search"
+        placeholder="<?php
+          if (isset($_SESSION['srch']) && $_SESSION['srch'] != ''):
+            echo $_SESSION['srch'];
+          else:
+            echo 'Search some books...';
+          endif;
+        ?>"
+        class="box"
+      >
       <input type="submit" name="submit" value="search" class="btn">
     </form>
 
@@ -69,8 +90,8 @@ if (isset($_POST['add_to_cart'])) {
     <div class="box-container">
       <?php
 
-        if (isset($_POST['submit'])):
-          $search_item = $_POST['search'];
+        if (isset($_SESSION['srch']) && $_SESSION['srch'] != ''):
+          $search_item = $_SESSION['srch'];
           $select_products = mysqli_query($conn, "SELECT * FROM `products` WHERE name LIKE '%{$search_item}%'") or die('Query failed');
             if (mysqli_num_rows($select_products) > 0):
               while ($fetch_products = mysqli_fetch_assoc($select_products)):

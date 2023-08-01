@@ -7,6 +7,7 @@ $user_id = @$_SESSION['user_id'];
 
 if (!isset($user_id)) {
   header('location: login.php');
+  exit;
 }
 
 if (isset($_POST['order_btn'])) {
@@ -35,19 +36,30 @@ if (isset($_POST['order_btn'])) {
   $order_query = mysqli_query($conn, "SELECT * FROM `orders` WHERE name ='$name' AND number = '$number' AND email = '$email' AND method = '$method' AND address = '$address' AND total_products = '$total_products' AND total_price = '$cart_total'") or die('Query failed');
 
   if ($cart_total == 0) {
-    $message[] = 'Your cart is empty';
+    $_SESSION['msg'] = 'Your cart is empty';
+    header('location: checkout.php');
+    exit;
   } else {
     if (mysqli_num_rows($order_query) > 0) {
-      $message[] = 'Order already placed';
+      $_SESSION['msg'] = 'Order already placed';
+      header('location: checkout.php');
+      exit;
     } else {
       mysqli_query($conn, "INSERT INTO `orders` (user_id, name, number, email, method, address, total_products, total_price, placed_on) VALUES ('$user_id', '$name', '$number', '$email', '$method', '$address', '$total_products', '$cart_total', '$placed_on')") or die('Query failed');
 
-      $message[] = 'Order placed successfully';
+      $_SESSION['msg'] = 'Order placed successfully';
+      header('location: checkout.php');
+      exit;
 
       mysqli_query($conn, "DELETE FROM `cart` WHERE user_id = '$user_id'") or die('Query failed');
     }
   }
 
+}
+
+if (isset($_SESSION['msg'])) {
+  $message[] = $_SESSION['msg'];
+  unset($_SESSION['msg']);
 }
 
 ?>

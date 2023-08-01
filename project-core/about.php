@@ -5,12 +5,6 @@ session_start();
 
 $user_id = @$_SESSION['user_id'];
 
-/*
-if (!isset($user_id)) {
-  header('location: login.php');
-}
-*/
-
 ?>
 
 <!DOCTYPE html>
@@ -63,7 +57,7 @@ if (!isset($user_id)) {
 
       <div class="box">
         <img src="./images/clients-img/pic-1-durov.jpg" alt="Client photo">
-        <p>Wow! Super books, i am amazed. Bought whole "Lord of the Rings" here. Didn't like it though. Very boring. But shop is awesome.</p>
+        <p>Wow! Super books, I am amazed. Bought whole "Lord of the Rings" here. Didn't like it though. Very boring. But shop is awesome.</p>
         <div class="stars">
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>

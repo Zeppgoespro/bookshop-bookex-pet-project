@@ -5,11 +5,9 @@ session_start();
 
 $user_id = @$_SESSION['user_id'];
 
-
 if (!isset($user_id)) {
   $message[] = 'You are not registered yet. Please register or login to send a message!';
 }
-
 
 if (isset($_POST['send'])) {
   $name = mysqli_real_escape_string($conn, $_POST['name']);
@@ -20,13 +18,23 @@ if (isset($_POST['send'])) {
   $select_message = mysqli_query($conn, "SELECT * FROM `messages` WHERE name = '$name' AND email = '$email' AND number = '$number' AND message = '$msg'") or die('Query failed');
 
   if (mysqli_num_rows($select_message) > 0) {
-    $message[] = 'Message sent already';
+    $_SESSION['msg'] = 'Message sent already';
+    header('location: contacts.php');
+    exit;
   } elseif (!isset($user_id)) {
     header('location: contacts.php');
+    exit;
   } else {
     mysqli_query($conn, "INSERT INTO `messages` (user_id, name, email, number, message) VALUES ('$user_id', '$name', '$email', '$number', '$msg')") or die('Query failed');
-    $message[] = 'Message sent successfully';
+    $_SESSION['msg'] = 'Message sent successfully';
+    header('location: contacts.php');
+    exit;
   }
+}
+
+if (isset($_SESSION['msg'])) {
+  $message[] = $_SESSION['msg'];
+  unset($_SESSION['msg']);
 }
 
 ?>
