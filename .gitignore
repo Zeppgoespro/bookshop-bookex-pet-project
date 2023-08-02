@@ -1,4 +1,4 @@
 # Ignoring 'data' folder where nginx 'logs' folder and 'mysql' db folder
-# Structure: main > data > logs & mysql
+# Structure: main > data > logs && mysql
 
 /data/

@@ -7,6 +7,7 @@ $admin_id = @$_SESSION['admin_id'];
 
 if (!isset($admin_id)) {
   header('location: login.php');
+  exit;
 }
 
 if (isset($_POST['add_product'])) {
@@ -20,21 +21,29 @@ if (isset($_POST['add_product'])) {
   $select_product_name = mysqli_query($conn, "SELECT name FROM `products` WHERE name = '$name'") or die('Query failed');
 
   if (mysqli_num_rows($select_product_name) > 0) {
-    $message[] = 'Product name already added';
+    $_SESSION['msg'] = 'Product name already added';
+    header('location: admin-products.php');
+    exit;
 
   } else {
     $add_product_query = mysqli_query($conn, "INSERT INTO `products` (name, price, image) VALUES ('$name', '$price', '$image')") or die('Query failed');
 
     if ($add_product_query) {
       if ($image_size > 2000000) {
-        $message[] = 'Image size is too large';
+        $_SESSION['msg'] = 'Image size is too large';
+        header('location: admin-products.php');
+        exit;
 
       } else {
         move_uploaded_file($image_tmp_name, $image_folder);
-        $message[] = 'Product added successfully';
+        $_SESSION['msg'] = 'Product added successfully';
+        header('location: admin-products.php');
+        exit;
       }
     } else {
-      $message[] = 'Product could not be added';
+      $_SESSION['msg'] = 'Product could not be added';
+      header('location: admin-products.php');
+      exit;
     }
   }
 }
@@ -46,6 +55,7 @@ if (isset($_GET['delete'])) {
   unlink('./uploaded-img/' . $fetch_delete_image['image']);
   mysqli_query($conn, "DELETE FROM `products` WHERE id = '$delete_id'") or die('Query failed');
   header('location: admin-products.php');
+  exit;
 }
 
 if (isset($_POST['update_product'])) {
@@ -63,7 +73,9 @@ if (isset($_POST['update_product'])) {
 
   if (!empty($update_image)) {
     if ($update_image_size > 2000000) {
-      $message[] = 'Image size is too large';
+      $_SESSION['msg'] = 'Image size is too large';
+      header('location: admin-products.php');
+      exit;
 
     } else {
       mysqli_query($conn, "UPDATE `products` SET image = '$update_image' WHERE id = '$update_p_id'") or die('Query failed');
@@ -72,6 +84,12 @@ if (isset($_POST['update_product'])) {
     }
   }
   header('location: admin-products.php');
+  exit;
+}
+
+if (isset($_SESSION['msg'])) {
+  $message[] = $_SESSION['msg'];
+  unset($_SESSION['msg']);
 }
 
 ?>

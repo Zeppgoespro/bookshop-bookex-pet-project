@@ -40,8 +40,8 @@ $user_id = @$_SESSION['user_id'];
 
       <div class="content">
         <h3>why us?</h3>
-        <p>Because we wear clothes and staves like mages. Actually we're not mages, we just want to trick you, so you buy something we don't need. And you don't need as well.</p>
-        <p>Buy some books friend. You don't need money, noone need it. You need books, not the money. We need money because we possesed with greed and lust. Money, money, money. It's all we need, we are like dirty angry pigs.</p>
+        <p>Because we wear clothes and staves like mages. Actually we're not the mages, we just want to trick you, so you will buy something we don't need. And you don't need as well.</p>
+        <p>Buy some books friend. You don't need money, noone need it. You need books, not the money. We need money because we possesed with greed and lust. Money, money, money! It's all we need, we are like dirty angry pigs.</p>
         <a href="./contacts.php" class="btn">contact us</a>
       </div>
 

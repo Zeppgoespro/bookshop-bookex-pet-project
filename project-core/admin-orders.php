@@ -7,19 +7,28 @@ $admin_id = @$_SESSION['admin_id'];
 
 if (!isset($admin_id)) {
   header('location: login.php');
+  exit;
 }
 
 if (isset($_POST['update_order'])) {
   $order_update_id = $_POST['order_id'];
   $update_payment = $_POST['update_payment'];
   mysqli_query($conn, "UPDATE `orders` SET payment_status ='$update_payment' WHERE id ='$order_update_id'") or die('Query failed');
-  $message[] = 'Payment status has been updated';
+  $_SESSION['msg'] = 'Payment status has been updated';
+  header('location: admin-orders.php');
+  exit;
 }
 
 if (isset($_GET['delete'])) {
   $delete_id = $_GET['delete'];
   mysqli_query($conn, "DELETE FROM `orders` WHERE id = '$delete_id'") or die('Query failed');
   header('location: admin-orders.php');
+  exit;
+}
+
+if (isset($_SESSION['msg'])) {
+  $message[] = $_SESSION['msg'];
+  unset($_SESSION['msg']);
 }
 
 ?>
