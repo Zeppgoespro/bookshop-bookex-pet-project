@@ -95,8 +95,8 @@ $user_id = @$_SESSION['user_id'];
       </div>
 
       <div class="box">
-        <img src="./images/clients-img/pic-4-navalny.jpg" alt="Client photo">
-        <p>This shop is stands tall against authoritarian dictators for the sake of all society.</p>
+        <img src="./images/clients-img/pic-4-peter.jpg" alt="Client photo">
+        <p>This shop is best all across the known space and far beyond!</p>
         <div class="stars">
           <i class="fas fa-star"></i>
           <i class="fas fa-star"></i>
@@ -104,7 +104,7 @@ $user_id = @$_SESSION['user_id'];
           <i class="fas fa-star"></i>
           <i class="fas fa-star-half-alt"></i>
         </div>
-        <h3>Alexey Navalny</h3>
+        <h3>Peter Quill</h3>
       </div>
 
       <div class="box">
