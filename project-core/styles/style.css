@@ -241,7 +241,7 @@ section {
 .header .header-1 .flex {
   padding: 2rem;
   display: flex;
-  align-items: cemter;
+  align-items: center;
   justify-content: space-between;
   max-width: 1200px;
   margin: 0 auto;
@@ -284,7 +284,7 @@ section {
 .header .header-2 .flex {
   padding: 2rem;
   display: flex;
-  align-items: cemter;
+  align-items: center;
   justify-content: space-between;
   max-width: 1200px;
   margin: 0 auto;
