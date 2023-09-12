@@ -105,7 +105,8 @@ section {
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  background: url(../images/heading-bg.webp) no-repeat;
+  background: linear-gradient(rgba(0,0,0,.5), rgba(0,0,0,.5)),
+  url(../images/heading-bg.webp) no-repeat;
   background-size: cover;
   background-position: center;
   text-align: center;
@@ -113,12 +114,16 @@ section {
 
 .heading h3 {
   font-size: 4.5rem;
-  color: var(--black);
+  color: var(--purple);
+  border-radius: 1rem;
+  background-color: rgba(255,255,255,.92);
   text-transform: uppercase;
 }
 
 .heading p {
   font-size: 2.5rem;
+  border-radius: .5rem;
+  background-color: rgba(255,255,255,.92);
   color: var(--light-color);
 }
 
