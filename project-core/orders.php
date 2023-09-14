@@ -3,7 +3,11 @@
 include './config.php';
 session_start();
 
-$user_id = @$_SESSION['user_id'];
+if (isset($_SESSION['user_id'])):
+  $user_id = $_SESSION['user_id'];
+else:
+  $user_id = '';
+endif;
 
 ?>
 
@@ -68,7 +72,7 @@ $user_id = @$_SESSION['user_id'];
       <?php
 
           endwhile;
-        elseif (!isset($user_id)):
+        elseif ($user_id == ''):
           echo '<p class="empty">Need to register or login</p>';
         else:
           echo '<p class="empty">No orders placed yet</p>';

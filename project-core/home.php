@@ -3,7 +3,11 @@
 include './config.php';
 session_start();
 
-$user_id = @$_SESSION['user_id'];
+if (isset($_SESSION['user_id'])):
+  $user_id = $_SESSION['user_id'];
+else:
+  $user_id = '';
+endif;
 
 if (isset($_POST['add_to_cart'])) {
 
@@ -18,7 +22,7 @@ if (isset($_POST['add_to_cart'])) {
     $_SESSION['msg'] = 'Already added to cart';
     header('location: home.php#actual');
     exit;
-  } elseif (!isset($user_id)) {
+  } elseif ($user_id === '') {
     $_SESSION['msg'] = 'You are not registered yet. Please register or login!';
     header('location: home.php#actual');
     exit;

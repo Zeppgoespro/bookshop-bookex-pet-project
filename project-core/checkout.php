@@ -3,12 +3,13 @@
 include './config.php';
 session_start();
 
-$user_id = @$_SESSION['user_id'];
-
-if (!isset($user_id)) {
+if (isset($_SESSION['user_id'])):
+  $user_id = $_SESSION['user_id'];
+else:
+  $user_id = '';
   header('location: login.php');
   exit;
-}
+endif;
 
 if (isset($_POST['order_btn'])) {
   $name = mysqli_real_escape_string($conn, $_POST['name']);

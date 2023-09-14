@@ -3,12 +3,13 @@
 include './config.php';
 session_start();
 
-$admin_id = @$_SESSION['admin_id'];
-
-if (!isset($admin_id)) {
+if (isset($_SESSION['admin_id'])):
+  $admin_id = $_SESSION['admin_id'];
+else:
+  $admin_id = '';
   header('location: login.php');
   exit;
-}
+endif;
 
 if (isset($_POST['add_product'])) {
   $name = mysqli_real_escape_string($conn, $_POST['name']);
@@ -83,6 +84,7 @@ if (isset($_POST['update_product'])) {
       unlink('./uploaded-img/' . $update_old_image);
     }
   }
+  $_SESSION['msg'] = 'Product updated successfully';
   header('location: admin-products.php');
   exit;
 }

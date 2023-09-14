@@ -78,24 +78,29 @@ section {
   top: 0;
   margin: 0 auto;
   max-width: 1200px;
-  background-color: var(--light-bg);
+  background-color: var(--black);
   padding: 2rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
   z-index: 10000;
   gap: 1.5rem;
+  border-bottom-left-radius: 1rem;
+  border-bottom-right-radius: 1rem;
 }
 
 .message span {
-  font-size: 2rem;
-  color: var(--black);
+  font-size: 2.3rem;
+  color: var(--white);
 }
 
 .message i {
   cursor: pointer;
-  color: var(--red);
-  font-size: 2.5rem;
+  color: #ff0000;
+  font-size: 2.8rem;
+  background-color: var(--white);
+  padding: .4rem .93rem;
+  border-radius: 100%;
 }
 
 .message i:hover {

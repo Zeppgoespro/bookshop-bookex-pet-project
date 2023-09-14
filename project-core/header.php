@@ -1,6 +1,10 @@
 <?php
 
-$user_id = @$_SESSION['user_id'];
+if (isset($_SESSION['user_id'])):
+  $user_id = $_SESSION['user_id'];
+else:
+  $user_id = '';
+endif;
 
 if (isset($message)) {
   foreach ($message as $message) {
@@ -62,7 +66,7 @@ if (isset($message)) {
       </div>
 
       <div class="user-box">
-        <?php if (!isset($user_id)): ?>
+        <?php if ($user_id === ''): ?>
           <p>You're not registered!</p>
           <a href="./login.php" class="btn">login</a>
           <a href="./register.php" class="option-btn">register</a>

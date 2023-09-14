@@ -3,7 +3,11 @@
 include './config.php';
 session_start();
 
-$user_id = @$_SESSION['user_id'];
+if (isset($_SESSION['user_id'])):
+  $user_id = $_SESSION['user_id'];
+else:
+  $user_id = '';
+endif;
 
 if (isset($_POST['update_cart'])) {
   $cart_id = $_POST['cart_id'];
@@ -97,7 +101,7 @@ if (isset($_SESSION['msg'])) {
 
             $grand_total += $sub_total;
           }
-        } elseif (!isset($user_id)) {
+        } elseif ($user_id == '') {
           echo '<p class="empty">Need to register or login</p>';
         } else {
           echo '<p class="empty">Your cart is empty</p>';

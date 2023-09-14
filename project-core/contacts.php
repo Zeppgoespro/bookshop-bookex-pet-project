@@ -3,11 +3,12 @@
 include './config.php';
 session_start();
 
-$user_id = @$_SESSION['user_id'];
-
-if (!isset($user_id)) {
+if (isset($_SESSION['user_id'])):
+  $user_id = $_SESSION['user_id'];
+else:
+  $user_id = '';
   $message[] = 'You are not registered yet. Please register or login to send a message!';
-}
+endif;
 
 if (isset($_POST['send'])) {
   $name = mysqli_real_escape_string($conn, $_POST['name']);
@@ -21,7 +22,7 @@ if (isset($_POST['send'])) {
     $_SESSION['msg'] = 'Message sent already';
     header('location: contacts.php');
     exit;
-  } elseif (!isset($user_id)) {
+  } elseif ($user_id === '') {
     header('location: contacts.php');
     exit;
   } else {

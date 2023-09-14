@@ -3,11 +3,15 @@
 include './config.php';
 session_start();
 
-$user_id = @$_SESSION['user_id'];
+if (isset($_SESSION['user_id'])):
+  $user_id = $_SESSION['user_id'];
+else:
+  $user_id = '';
+endif;
 
-if (isset($_POST['submit'])):
+if (isset($_GET['submit'])):
   unset($_SESSION['srch']);
-  $_SESSION['srch'] = $_POST['search'];
+  $_SESSION['srch'] = $_GET['search'];
   header('location: search-page.php#search-anchor');
   exit;
 endif;
@@ -25,7 +29,7 @@ if (isset($_POST['add_to_cart'])) {
     $_SESSION['msg'] = 'Already added to cart';
     header('location: search-page.php#search-anchor');
     exit;
-  } elseif (!isset($user_id)) {
+  } elseif ($user_id === '') {
     $_SESSION['msg'] = 'You are not registered yet. Please register or login!';
     header('location: search-page.php#search-anchor');
     exit;
@@ -69,7 +73,7 @@ if (isset($_SESSION['msg'])) {
 
   <section class="search-form">
 
-    <form action="" method="post">
+    <form action="" method="get">
       <input type="text" name="search"
         placeholder="<?php
           if (isset($_SESSION['srch']) && $_SESSION['srch'] != ''):
