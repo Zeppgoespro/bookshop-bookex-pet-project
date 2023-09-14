@@ -1,6 +1,8 @@
 Здравствуй, дорогой друг! Это мой самый первый pet-project.<br/>
 <b>Внимание!</b> Он доступен онлайн на <b>www.borozepp.online</b><br/>
 
+Обязательно посмотри второй проект здесь: <b>www.github.com/Zeppgoespro/estate-agency-hearthfire-pet-project</b>
+
 Если хочется запустить локально, тогда:<br/>
 
 1. <b>'git clone'</b> его туда, куда тебе удобно.
